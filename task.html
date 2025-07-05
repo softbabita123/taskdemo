@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Tab Style Interactive Boxes</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background: #f0f0f0;
+      margin: 0;
+      padding: 60px 20px;
+    }
+
+    .container {
+      max-width: 600px;
+      margin: auto;
+    }
+
+    .box-row {
+     border: 2px solid #ccc;
+      justify-content: space-between;
+      gap: 20px;
+      padding: 20px;
+    }
+
+    .box {
+      flex: 1;
+      background: white;
+      border: 2px solid #ccc;
+      border-radius: 10px;
+      padding: 15px;
+      position: relative;
+      margin: 10px;
+    }
+
+    .box input[type="radio"] {
+      margin-right: 8px;
+    }
+
+    .box-content {
+      margin-top: 15px;
+      display: none;
+      border-top: 1px solid #ddd;
+      padding-top: 10px;
+    }
+
+    .box.active {
+      border-color: #000;
+      box-shadow: 0 0 10px rgba(0,0,0,0.2);
+    }
+
+    .box.active .box-content {
+      display: block;
+    }
+
+    .color-picker,
+    .size-select {
+      padding: 5px;
+      width: 100%;
+      max-width: 150px;
+      margin-bottom: 10px;
+    }
+
+    label.option-label {
+      display: block;
+      margin: 8px 0 4px;
+    }
+  </style>
+</head>
+<body>
+
+  <div class="container">
+    <div class="box-row">
+      <div class="box" id="box1">
+        <label><input type="radio" name="boxSelect" value="box1" /> Box 1</label>
+        <div class="box-content">
+          <label class="option-label">Color:</label>
+          <input type="color" class="color-picker" />
+          <label class="option-label">Size:</label>
+          <select class="size-select">
+            <option value="small">Small</option>
+            <option value="medium" selected>Medium</option>
+            <option value="large">Large</option>
+          </select>
+        </div>
+      </div>
+
+      <div class="box" id="box2">
+        <label><input type="radio" name="boxSelect" value="box2" /> Box 2</label>
+        <div class="box-content">
+          <label class="option-label">Color:</label>
+          <input type="color" class="color-picker" />
+          <label class="option-label">Size:</label>
+          <select class="size-select">
+            <option value="small">Small</option>
+            <option value="medium" selected>Medium</option>
+            <option value="large">Large</option>
+          </select>
+        </div>
+      </div>
+
+      <div class="box" id="box3">
+        <label><input type="radio" name="boxSelect" value="box3" /> Box 3</label>
+        <div class="box-content">
+          <label class="option-label">Color:</label>
+          <input type="color" class="color-picker" />
+          <label class="option-label">Size:</label>
+          <select class="size-select">
+            <option value="small">Small</option>
+            <option value="medium" selected>Medium</option>
+            <option value="large">Large</option>
+          </select>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    const radioButtons = document.querySelectorAll('input[name="boxSelect"]');
+    const boxes = document.querySelectorAll(".box");
+
+    radioButtons.forEach((radio) => {
+      radio.addEventListener("change", function () {
+        boxes.forEach((box) => {
+          box.classList.remove("active");
+        });
+
+        const selectedBox = document.getElementById(this.value);
+        selectedBox.classList.add("active");
+      });
+    });
+
+    boxes.forEach((box) => {
+      const colorInput = box.querySelector(".color-picker");
+      const sizeSelect = box.querySelector(".size-select");
+
+      colorInput.addEventListener("input", function () {
+        box.style.backgroundColor = this.value;
+      });
+
+      sizeSelect.addEventListener("change", function () {
+        const paddingValue = this.value === "small" ? "10px" :
+                             this.value === "medium" ? "20px" : "40px";
+        box.style.padding = paddingValue;
+      });
+    });
+  </script>
+</body>
+</html>
+  
